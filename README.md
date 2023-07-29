@@ -1,4 +1,4 @@
-# bau
+# BAMU
 The code for paper 'Backdoor Attack through Machine Unlearning' which was submitted to CCS 2023, is available here.
 
 # Environment
