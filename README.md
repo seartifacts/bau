@@ -5,12 +5,12 @@ The code for paper 'Backdoor Attack through Machine Unlearning' which was submit
 This project is based on python 3.8 and pytorch 1.12.
 
 # Structure
-Input-Targeted-based BAU: bau/attack/it<br>
-BadNets-based BAU: bau/attack/bn<br>
-Neural Cleanse: bau/attack/nc<br>
-Randomized Channel Shuffling: bau/attack/rcs<br>
-Model-Uncertainty-based Detection: bau/defense/mu<br>
-Sub-Model-Similarity-based Detection: bau/defense/sms
+Input-Targeted-based BAMU: bamu/attack/it<br>
+BadNets-based BAMU: bamu/attack/bn<br>
+Neural Cleanse: bamu/attack/nc<br>
+Randomized Channel Shuffling: bamu/attack/rcs<br>
+Model-Uncertainty-based Detection: bamu/defense/mu<br>
+Sub-Model-Similarity-based Detection: bamu/defense/sms
 
 # Usage
 Attack:
