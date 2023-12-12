@@ -132,7 +132,6 @@ for _ in range(5):
             rest_idxs = mitigation_all[m_idx - len(train_dataset.data)]
 
         model = VGG11().to(device)
-
         load_model(model, args.path + "SNO_{}/cache/shard-{}-{}.pt".format(args.shards, sub_model, args.requests), device)
 
         original_idx = np.random.choice(np.intersect1d(clean_all, train_idx), len(rest_idxs), replace=False)
