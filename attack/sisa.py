@@ -43,7 +43,6 @@ def sisa_train(args, train_data, train_label, train_kwargs):
                                   weight_decay=5e-4)  # lr: 0.01-0.001
 
         epochs = args.epochs
-
         shard_size = sizeOfShard(args, sn)
         slice_size = shard_size // args.slices
         avg_epochs_per_slice = (
