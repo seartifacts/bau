@@ -1,5 +1,5 @@
 # BAMU
-The code for paper 'Backdoor Attack through Machine Unlearning' which was submitted to ISSTA 2024, is available here.
+The code for paper 'Backdoor Attack through Machine Unlearning' which was submitted to TIFS, is available here.
 
 # Environment
 This project is based on python 3.8 and pytorch 1.12.
