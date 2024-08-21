@@ -7,8 +7,10 @@ This project is based on python 3.8 and pytorch 1.12.
 # Structure
 Input-Targeted-based BAMU: bamu/attack/it<br>
 BadNets-based BAMU: bamu/attack/bn<br>
+AML: bamu/attack/aml<br>
 Neural Cleanse: bamu/attack/nc<br>
 Randomized Channel Shuffling: bamu/attack/rcs<br>
+UMD: bamu/attack/umd<br>
 Model-Uncertainty-based Detection: bamu/defense/mu<br>
 Sub-Model-Similarity-based Detection: bamu/defense/sms
 
