@@ -1,0 +1,20 @@
+{
+    "NUM_CLASS": 10,
+    "SPLIT_RATIO": 0.5,
+    "SETTING": "A2O",
+    "TC": 0,
+    "EPOCH": 200,
+    "LR": 0.001,
+    "NUM_POISONING_SAMPLE": 3000,
+    "PATTERN_TYPE": "patch",
+    "PERTURBATION_SHAPE": "bigX",
+    "PERTURBATION_SIZE":  0.05882352941,
+    "PATCH_TYPE": "noise",
+    "MASK_SIZE": 3,
+    "MARGIN": 3,
+    "RUN": 0,
+    "DEVICE": 0,
+    "DATASET": "cifar10",
+    "CLEAN_PATH": null,
+    "X2X_NUM": 5
+}

@@ -14,7 +14,7 @@ from glob import glob
 import json
 from torch import nn
 from attack.util_model import train
-from attack.model import MNISTNet, LeNet5, BadNet, FMNISTNet,VGG11, GTSRBNet
+from attack.model import MNISTNet, LeNet5, BadNet, FMNISTNet,VGG11, GTSRBNet, VGG16, ResNet50
 
 def sisa_train(args, train_data, train_label, train_kwargs):
     for sn in range(args.shards):
@@ -27,6 +27,16 @@ def sisa_train(args, train_data, train_label, train_kwargs):
             optimizer = optim.SGD(model.parameters(), lr=0.01)  # lr: 0.01-0.001
         elif args.dataset == 'cifar10':
             model = VGG11().to(device)
+            optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9,
+                                  weight_decay=5e-4)  # lr: 0.01-0.001
+            def adjust_learning_rate(optimizer, epoch):
+                """Sets the learning rate to the initial LR decayed by 2 every 30 epochs"""
+                lr = 0.01 * (0.5 ** (epoch // 10))
+                for param_group in optimizer.param_groups:
+                    param_group['lr'] = lr
+        elif args.dataset == 'imagenet':
+            model = VGG16().to(device)
+            # model = ResNet50().to(device)
             optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9,
                                   weight_decay=5e-4)  # lr: 0.01-0.001
             def adjust_learning_rate(optimizer, epoch):
@@ -112,6 +122,8 @@ def sisa_train(args, train_data, train_label, train_kwargs):
                 for epoch in range(start_epoch, slice_epochs):
                     if args.dataset == 'cifar10':
                         adjust_learning_rate(optimizer, epoch)
+                    elif args.dataset == 'imagnet':
+                        adjust_learning_rate(optimizer, epoch)
                     train(model, dataloader, nn.CrossEntropyLoss(), optimizer, device)
 
                     # Create a checkpoint every chkpt_interval.
@@ -184,6 +196,9 @@ def sisa_test(args, dataloader, name=None):
             model = LeNet5("mnist").to(device)
         elif args.dataset == 'cifar10':
             model = VGG11().to(device)
+        elif args.dataset == 'imagenet':
+            model = VGG16().to(device)
+            # model = ResNet50().to(device)
         elif args.dataset == 'gtsrb':
             model = GTSRBNet().to(device)
         elif args.dataset == 'fmnist':
@@ -201,7 +216,7 @@ def sisa_test(args, dataloader, name=None):
         # Compute predictions batch per batch.
         if args.dataset == 'gtsrb':
             nb_classes = 43
-        elif args.dataset == 'miniimagenet':
+        elif args.dataset == 'imagenet':
             nb_classes = 100
         else:
             nb_classes = 10

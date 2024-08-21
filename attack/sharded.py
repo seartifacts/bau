@@ -5,6 +5,7 @@ import json
 import torch
 from torchvision import datasets, transforms
 from attack.gtsrb_data import GTSRBLoader
+from attack.imagenet_data import NumpyDataset
 
 
 def sizeOfShard(args, shard):
@@ -61,6 +62,17 @@ def fetchShardBatch(args, shard, train_data, train_label, train_kwargs, sl, slic
             normalize,
         ])
         train_dataset = datasets.CIFAR10('../../data', train=True, download=True, transform=train_transform)
+    elif args.dataset == 'imagenet':
+        train_transform = transforms.Compose([
+            # transforms.Resize(256),
+            # transforms.CenterCrop(224),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ])
+        trainD = np.load("../../data/imagenet100/train_image.npy", allow_pickle=True)
+        trainL = np.load("../../data/imagenet100/train_label.npy", allow_pickle=True)
+        train_dataset = NumpyDataset(trainD, trainL, train_transform)
     elif args.dataset == 'gtsrb':
         trainD = np.load("../../data/gtsrb/train_image.npy")
         trainL = np.load("../../data/gtsrb/train_label.npy")
@@ -74,6 +86,7 @@ def fetchShardBatch(args, shard, train_data, train_label, train_kwargs, sl, slic
     end = min((sl + 1) * slice_size, len(shards[shard]))
     indices = np.setdiff1d(shards[shard][begin:end], requests[shard])
     np.random.shuffle(indices)
+    indices = indices.astype(int)
     train_dataset.data = train_data[indices]
     train_dataset.targets = train_label[indices]
 
